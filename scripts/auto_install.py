@@ -52,22 +52,21 @@ def ensure_env(project_root: Path, venv_py: str):
             pass
 
 
-def systemd_quote(value: Path | str) -> str:
-    escaped = str(value).replace("\\", "\\\\").replace('"', '\\"')
-    return f'"{escaped}"'
+def systemd_escape(value: Path | str) -> str:
+    return str(value).replace("\\", "\\\\")
 
 
 def install_systemd(project_root: Path, venv_py: str, service_name: str, start_service: bool):
     service_path = Path("/etc/systemd/system") / f"{service_name}.service"
     content = "\n".join([
         "[Unit]",
-        "Description=CLIProxy Management Panel",
+        "Description=CPA-X Panel",
         "After=network.target",
         "",
         "[Service]",
         "Type=simple",
-        f"WorkingDirectory={systemd_quote(project_root)}",
-        f"ExecStart={systemd_quote(venv_py)} {systemd_quote(project_root / 'app.py')}",
+        f"WorkingDirectory={systemd_escape(project_root)}",
+        f"ExecStart={systemd_escape(venv_py)} {systemd_escape(project_root / 'app.py')}",
         "Restart=always",
         "RestartSec=5",
         "Environment=PYTHONUNBUFFERED=1",
