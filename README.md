@@ -5,6 +5,27 @@ English | [中文](README_CN.md)
 `CPA-X` is a monitoring and management panel for `CLIProxyAPI / cliproxyapi`.  
 This copy is prepared as a clean, shareable, deployment-ready package.
 
+## Project Origin
+
+This repository is a modified derivative release.
+
+- Original panel project: `CPA-X`  
+  URL: `https://github.com/ferretgeek/CPA-X`
+- Upstream service project: `CLIProxyAPI`  
+  URL: `https://github.com/router-for-me/CLIProxyAPI`
+
+`CPA-XS` is maintained as a customized build based on the original project, with practical adjustments to UI, deployment flow, and operational stability.
+
+## Preview
+
+### Dark Preview
+
+![CPA-XS Dark Preview](docs/images/preview-dark.png)
+
+### Light Preview
+
+![CPA-XS Light Preview](docs/images/preview-light.png)
+
 Features:
 - service status and health checks
 - request statistics, token and cost display
@@ -28,7 +49,7 @@ Windows can run the panel, but `systemctl`-based features are limited.
 ### Linux
 ```bash
 git clone https://github.com/liuxi8860-ctrl/CPA-XS.git
-cd CPA-X
+cd CPA-XS
 
 cp .env.example .env
 bash scripts/install.sh
@@ -49,7 +70,7 @@ http://your-server-ip:8080
 ### Windows
 ```powershell
 git clone https://github.com/liuxi8860-ctrl/CPA-XS.git
-cd CPA-X
+cd CPA-XS
 copy .env.example .env
 powershell -ExecutionPolicy Bypass -File scripts/install.ps1
 ```

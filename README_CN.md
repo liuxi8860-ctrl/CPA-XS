@@ -5,6 +5,27 @@
 `CPA-X` 是一个给 `CLIProxyAPI / cliproxyapi` 使用的监控与管理面板。  
 这份副本已经整理成适合直接发布和部署的版本，适合别人拉下来后按文档直接安装。
 
+## 项目来源
+
+本项目为二次修改版本。
+
+- 原面板项目：`CPA-X`
+  地址：`https://github.com/ferretgeek/CPA-X`
+- 上游服务项目：`CLIProxyAPI`
+  地址：`https://github.com/router-for-me/CLIProxyAPI`
+
+当前仓库 `CPA-XS` 是在原项目基础上，按实际使用需求做了界面、部署与稳定性方面的修改。
+
+## 项目预览
+
+### 深色预览
+
+![CPA-XS 深色预览](docs/images/preview-dark.png)
+
+### 浅色预览
+
+![CPA-XS 浅色预览](docs/images/preview-light.png)
+
 支持能力：
 - 服务状态、健康检查、资源监控
 - 请求统计、Token/费用显示
@@ -30,7 +51,7 @@
 ### Linux
 ```bash
 git clone https://github.com/liuxi8860-ctrl/CPA-XS.git
-cd CPA-X
+cd CPA-XS
 
 cp .env.example .env
 bash scripts/install.sh
@@ -53,7 +74,7 @@ http://你的服务器IP:8080
 ### Windows
 ```powershell
 git clone https://github.com/liuxi8860-ctrl/CPA-XS.git
-cd CPA-X
+cd CPA-XS
 copy .env.example .env
 powershell -ExecutionPolicy Bypass -File scripts/install.ps1
 ```
