@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>CPA-X 管理面板 V3.1</title>
+    <title>CPA-XS 管理面板 V3.1</title>
     <meta name="theme-color" content="#12100f" id="theme-color-meta">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1909,7 +1909,7 @@
     
 
 
-        /* CPA-X theme override (CLIProxyAPI-like dark) */
+        /* CPA-XS theme override (CLIProxyAPI-like dark) */
         body[data-theme="dark"] {
             --chrome-bg: #12100f;
             --bg-gradient:
@@ -1990,7 +1990,7 @@
             <div class="logo-icon">
                 <svg viewBox="0 0 24 24"><path d="M13 2L5 13h5l-1 9 8-11h-5l1-9z"/></svg>
             </div>
-            <span class="logo-text">CPA-X</span>
+            <span class="logo-text">CPA-XS</span>
             <span class="badge info" id="panel-version-badge" style="margin-left:6px;">V3.1</span>
         </div>
         <div class="header-center">
@@ -2460,7 +2460,7 @@
             <div class="theme-picker-header">
                 <div>
                     <div class="theme-picker-title">选择主题</div>
-                    <div class="theme-picker-subtitle">切换 CPA-X 的界面外观，数据与布局保持不变。</div>
+                    <div class="theme-picker-subtitle">切换 CPA-XS 的界面外观，数据与布局保持不变。</div>
                 </div>
                 <button class="modal-close" onclick="closeThemePicker(event)" title="关闭">
                     <svg viewBox="0 0 24 24"><path d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29l6.3 6.3 6.3-6.3z"/></svg>
@@ -3529,7 +3529,7 @@
         }
 
         async function clearStats() {
-            if (!confirm('这不会清空 CPA 里面的真实请求统计数据。\n\n它只会重置 CPA-X 面板自己的本地缓存和本地历史记录，页面随后仍会按 CPA 当前真实数据重新显示。\n\n是否继续？')) return;
+            if (!confirm('这不会清空 CPA 里面的真实请求统计数据。\n\n它只会重置 CPA-XS 面板自己的本地缓存和本地历史记录，页面随后仍会按 CPA 当前真实数据重新显示。\n\n是否继续？')) return;
             try {
                 const r = await api('/api/stats/clear', { method: 'POST' });
                 if (r && r.success) {
@@ -4010,4 +4010,5 @@
     </script>
 </body>
 </html>
+
 

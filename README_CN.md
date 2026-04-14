@@ -1,9 +1,11 @@
-# CPA-X 管理面板（V3.1）
+# CPA-XS 管理面板（V3.1）
 
 [English](README.md) | 中文
 
-`CPA-X` 是一个给 `CLIProxyAPI / cliproxyapi` 使用的监控与管理面板。  
+`CPA-XS` 是一个给 `CLIProxyAPI / cliproxyapi` 使用的监控与管理面板。  
 这份副本已经整理成适合直接发布和部署的版本，适合别人拉下来后按文档直接安装。
+
+> **AI 优先**：本仓库主要面向 AI Agent 部署/运维（而不是人类手动部署）。
 
 ## 项目来源
 

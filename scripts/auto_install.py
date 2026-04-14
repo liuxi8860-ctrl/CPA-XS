@@ -60,7 +60,7 @@ def install_systemd(project_root: Path, venv_py: str, service_name: str, start_s
     service_path = Path("/etc/systemd/system") / f"{service_name}.service"
     content = "\n".join([
         "[Unit]",
-        "Description=CPA-X Panel",
+        "Description=CPA-XS Panel",
         "After=network.target",
         "",
         "[Service]",
@@ -131,3 +131,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

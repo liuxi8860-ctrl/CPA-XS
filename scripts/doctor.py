@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-CPA-X doctor（AI 友好）
+CPA-XS doctor（AI 友好）
 
 用途：
 - 自动探测当前设备已有的 CLIProxyAPI / cliproxyapi 安装形态（systemd/unit/config/binary/auth/log）
@@ -312,3 +312,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -1,4 +1,4 @@
-# CPA-X（AI 部署手册）
+# CPA-XS（AI 部署手册）
 
 > 这份文档写给会跑命令的 AI Agent：目标是 **自动把面板部署到设备上**，并与设备上已存在的 **CLIProxyAPI / cliproxyapi** 正常对接。
 
@@ -124,3 +124,4 @@ systemctl restart cliproxy-panel
 - 如需外网访问，建议同时设置 `CLIPROXY_PANEL_PANEL_ACCESS_KEY`
 - 前端已移除导出入口，不要再帮用户恢复浏览器侧导出按钮
 - 主配置写回默认关闭；如用户明确要求恢复，才引导其在 `.env` 中设置 `CLIPROXY_PANEL_CONFIG_WRITE_ENABLED=true`
+

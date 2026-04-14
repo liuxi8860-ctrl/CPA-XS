@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-CPA-X 管理面板后端 V3.1
+CPA-XS 管理面板后端 V3.1
 功能: 为 CLIProxyAPI 提供监控统计、健康检查、资源监控、配置管理、API测试、模型管理
 优化: 缓存机制、预编译正则、非阻塞监控、减少shell调用
 """
@@ -26,7 +26,7 @@ from flask_cors import CORS
 import requests
 
 # 面板自身版本（与 GitHub Release/README 同步）
-PANEL_NAME = "CPA-X"
+PANEL_NAME = "CPA-XS"
 PANEL_VERSION = "3.1"
 PRICING_BASIS_TOKENS = 1_000_000
 PRICING_BASIS_LABEL = '百万Tokens'
@@ -1140,7 +1140,7 @@ def _fetch_openrouter_models():
 
     url = 'https://openrouter.ai/api/v1/models'
     try:
-        resp = requests.get(url, timeout=15, headers={'User-Agent': 'CPA-X Panel'})
+        resp = requests.get(url, timeout=15, headers={'User-Agent': 'CPA-XS Panel'})
         resp.raise_for_status()
         payload = resp.json() if resp.content else {}
         models = payload.get('data', []) if isinstance(payload, dict) else []
@@ -4310,4 +4310,5 @@ if __name__ == '__main__':
 
     print(f'{PANEL_NAME} Panel V{PANEL_VERSION} started on port {CONFIG["panel_port"]}')
     app.run(host=str(CONFIG.get('bind_host', '0.0.0.0') or '0.0.0.0'), port=CONFIG['panel_port'], debug=False)
+
 

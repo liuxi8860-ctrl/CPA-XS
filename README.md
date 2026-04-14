@@ -1,9 +1,11 @@
-# CPA-X Admin Panel (V3.1)
+# CPA-XS Admin Panel (V3.1)
 
 English | [中文](README_CN.md)
 
-`CPA-X` is a monitoring and management panel for `CLIProxyAPI / cliproxyapi`.  
+`CPA-XS` is a monitoring and management panel for `CLIProxyAPI / cliproxyapi`.  
 This copy is prepared as a clean, shareable, deployment-ready package.
+
+> **AI-first**: this repository is primarily intended for AI Agent deployment and operations rather than manual human-first setup.
 
 ## Project Origin
 

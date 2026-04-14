@@ -1,14 +1,14 @@
-# CPA-X V3.1 快速部署清单
+# CPA-XS V3.1 快速部署清单
 
 ## 1. 适合谁
 
-适合已经在服务器上运行了 `CLIProxyAPI / cliproxyapi`，现在只想快速把 `CPA-X` 面板装上去的人。
+适合已经在服务器上运行了 `CLIProxyAPI / cliproxyapi`，现在只想快速把 `CPA-XS` 面板装上去的人。
 
 ## 2. Linux 最快步骤
 
 ```bash
 git clone https://github.com/liuxi8860-ctrl/CPA-XS.git
-cd CPA-X
+cd CPA-XS
 cp .env.example .env
 bash scripts/install.sh
 python3 scripts/doctor.py --write-env
@@ -45,7 +45,7 @@ http://服务器IP:8080
 
 ```powershell
 git clone https://github.com/liuxi8860-ctrl/CPA-XS.git
-cd CPA-X
+cd CPA-XS
 copy .env.example .env
 powershell -ExecutionPolicy Bypass -File scripts/install.ps1
 ```
@@ -109,3 +109,5 @@ CLIPROXY_PANEL_CONFIG_WRITE_ENABLED=true
 - `scripts/install.sh`
 - `scripts/install.ps1`
 - `scripts/doctor.py`
+
+

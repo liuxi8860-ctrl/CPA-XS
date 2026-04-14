@@ -1,6 +1,6 @@
 {
-  "name": "CPA-X",
-  "version": "2.1.1",
+  "name": "CPA-XS",
+  "version": "3.1.1",
   "description": "CLIProxyAPI 管理面板",
   "language": "python",
   "entrypoint": "app.py",
@@ -55,3 +55,4 @@
     "install_ps1": "scripts/install.ps1"
   }
 }
+
