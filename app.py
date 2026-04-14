@@ -839,12 +839,53 @@ def load_usage_snapshot_from_disk():
     return None
 
 
-def save_usage_snapshot(snapshot):
+def _snapshot_usage_root(snapshot):
+    if isinstance(snapshot, dict):
+        usage = snapshot.get('usage')
+        if isinstance(usage, dict):
+            return usage
+        return snapshot
+    return {}
+
+
+def _snapshot_total_tokens(snapshot):
+    if not snapshot:
+        return 0
+    totals, _ = aggregate_usage_snapshot(snapshot)
+    total = _safe_int(totals.get('total_tokens', 0))
+    if total > 0:
+        return total
+    usage = _snapshot_usage_root(snapshot)
+    return _safe_int(usage.get('total_tokens', 0))
+
+
+def _should_preserve_usage_snapshot(existing_snapshot, new_snapshot):
+    if not existing_snapshot or not new_snapshot:
+        return False
+    existing_requests = _snapshot_request_count(existing_snapshot)
+    new_requests = _snapshot_request_count(new_snapshot)
+    existing_tokens = _snapshot_total_tokens(existing_snapshot)
+    new_tokens = _snapshot_total_tokens(new_snapshot)
+    if existing_requests <= 0 and existing_tokens <= 0:
+        return False
+    # 只要核心统计明显回退，就保留旧快照，等待后续自动恢复。
+    return new_requests < existing_requests or new_tokens < existing_tokens
+
+
+def save_usage_snapshot(snapshot, force=False):
     path = CONFIG.get('usage_snapshot_path')
     if not path or snapshot is None:
         return False
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
+        if not force:
+            existing_snapshot = load_usage_snapshot_from_disk()
+            if _should_preserve_usage_snapshot(existing_snapshot, snapshot):
+                print(
+                    "Info: preserving existing usage snapshot because the latest "
+                    "management statistics regressed unexpectedly"
+                )
+                return False
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(snapshot, f, ensure_ascii=False, indent=2)
         return True
@@ -1251,6 +1292,37 @@ def _snapshot_request_count(snapshot):
         return 0
     _, reqs = aggregate_usage_snapshot(snapshot)
     return _safe_int(reqs.get('total_requests', 0))
+
+
+def _recover_usage_snapshot_if_needed(reference_snapshot, reason=''):
+    if not reference_snapshot:
+        return False, None
+
+    reference_requests = _snapshot_request_count(reference_snapshot)
+    reference_tokens = _snapshot_total_tokens(reference_snapshot)
+    if reference_requests <= 0 and reference_tokens <= 0:
+        return False, None
+
+    current_snapshot = fetch_usage_snapshot(use_cache=False)
+    current_requests = _snapshot_request_count(current_snapshot)
+    current_tokens = _snapshot_total_tokens(current_snapshot)
+
+    if not _should_preserve_usage_snapshot(reference_snapshot, current_snapshot):
+        return False, current_snapshot
+
+    print(
+        f"[{datetime.now()}] Usage statistics regressed after {reason or 'operation'} "
+        f"({current_requests}/{current_tokens} < {reference_requests}/{reference_tokens}), "
+        "attempting recovery..."
+    )
+
+    if not import_usage_snapshot(reference_snapshot):
+        return False, current_snapshot
+
+    time.sleep(1)
+    recovered_snapshot = fetch_usage_snapshot(use_cache=False)
+    save_usage_snapshot(recovered_snapshot, force=True)
+    return True, recovered_snapshot
 
 
 def _usage_snapshot_worker():
@@ -2136,6 +2208,10 @@ def perform_update():
     result = {'success': False, 'message': '', 'details': []}
 
     try:
+        pre_update_snapshot = fetch_usage_snapshot(use_cache=False)
+        if pre_update_snapshot:
+            save_usage_snapshot(pre_update_snapshot, force=True)
+
         result['details'].append('Stopping service...')
         run_cmd(f'systemctl stop {CONFIG["cliproxy_service"]}')
         time.sleep(2)
@@ -2233,6 +2309,20 @@ def perform_update():
         result['success'] = True
         result['message'] = 'Update successful'
         result['details'].append('Service is running')
+
+        recovered_usage, recovered_snapshot = _recover_usage_snapshot_if_needed(
+            pre_update_snapshot,
+            reason='update'
+        )
+        if recovered_usage:
+            recovered_requests = _snapshot_request_count(recovered_snapshot)
+            recovered_tokens = _snapshot_total_tokens(recovered_snapshot)
+            result['details'].append(
+                f'Usage statistics restored after update: '
+                f'{recovered_requests} requests / {recovered_tokens} tokens'
+            )
+        else:
+            result['details'].append('Usage statistics remained intact after update')
 
         state['last_update_time'] = datetime.now().isoformat()
         state['last_update_result'] = result
